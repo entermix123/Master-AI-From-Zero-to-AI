@@ -1,0 +1,11 @@
+Create local virtual environment
+	terminal --> python -m venv .venv
+
+Activate the virtual environment
+	termianl -> .venv\Scripts\Activate.ps1
+
+Install required packages
+	terminal --> pip install jupyter notebook numpy pandas scikit-learn matplotlib seaborn SpeechRecognition pyttsx3 tensorflow keras spacy xgboost
+
+Deactivate virual environment when stop working
+	terminal --> deactivate
