@@ -1,0 +1,655 @@
+Section 3 Day 2 - Exploratory Data Analysis (EDA)
+=================================================
+
+
+Content
+-------
+11. Introduction to Day 2: Exploratory Data Analysis (EDA)
+12. Loading and Inspecting Data
+13. Handling Missing Data
+14. Data Transformation and Feature Engineering
+15. Visualizing Data with Matplotlib and Seaborn
+16. Descriptive Statistics
+17. Hands-on Project: Exploratory Data Analysis on a Real Dataset
+Assignment 2: Day 2: Coding Exercise
+
+
+
+
+
+11. Introduction to Day 2: Exploratory Data Analysis (EDA)
+==========================================================
+
+Objective:
+
+Day 2 focuses on data exploration, cleaning, and visualization. We will load datasets, handle missing values, and visualize data using popular libraries like Pandas, Matplotlib, and Seaborn. This sets the groundwork for understanding data before building any machine learning models.
+
+Learning Outcomes
+By the end of the day, we will:
+
+    Be able to load data from various file formats (CSV, Excel).
+    Clean and preprocess data by handling missing values and outliers.
+    Create insightful data visualizations to explore relationships between variables.
+    Understand basic descriptive statistics and their role in data analysis.
+
+
+
+
+12. Loading and Inspecting Data
+===============================
+Activities:
+- Introduction to Data Loading
+- Loading a CSV File
+- Inspecting Data Structure
+
+We will use ready dataset from kaggle.com. Create free account and use education datasets - https://www.kaggle.com/datasets?tags=11105-Education
+
+We will use this dataset - https://www.kaggle.com/datasets/taweilo/mba-admission-dataset
+Download the dataset and unarchive it - MBA.csv
+
+
+Create new notebook Data_Info
+
+-----------------------------------------------
+import pandas as pd
+
+data = pd.read_csv('MBA.csv')
+
+print(data.head())
+-----------------------------------------------
+Play: shift + enter
+result: 
+   application_id  gender  international   gpa       major      race   gmat  \
+0               1  Female          False  3.30    Business     Asian  620.0   
+1               2    Male          False  3.28  Humanities     Black  680.0   
+2               3  Female           True  3.30    Business       NaN  710.0   
+3               4    Male          False  3.47        STEM     Black  690.0   
+4               5    Male          False  3.35        STEM  Hispanic  590.0   
+
+   work_exp          work_industry admission  
+0       3.0     Financial Services     Admit  
+1       5.0  Investment Management       NaN  
+2       5.0             Technology     Admit  
+3       6.0             Technology       NaN  
+4       5.0             Consulting       NaN  
+
+
+Check how many rows and columns we have in the dataset
+-----------------------------------------------
+print(data.shape)
+-----------------------------------------------
+Play: shift + enter
+result: (6194, 10)
+
+
+Check what columns we have in the dataset
+-----------------------------------------------
+print(data.columns)
+-----------------------------------------------
+Play: shift + enter
+result:
+Index(['application_id', 'gender', 'international', 'gpa', 'major', 'race',
+       'gmat', 'work_exp', 'work_industry', 'admission'],
+      dtype='str')
+
+
+
+Print data about the dataset
+-----------------------------------------------
+print(data.info())
+-----------------------------------------------
+Play: shift + enter
+result:
+<class 'pandas.DataFrame'>
+RangeIndex: 6194 entries, 0 to 6193
+Data columns (total 10 columns):
+ #   Column          Non-Null Count  Dtype  
+---  ------          --------------  -----  
+ 0   application_id  6194 non-null   int64  
+ 1   gender          6194 non-null   str    
+ 2   international   6194 non-null   bool   
+ 3   gpa             6194 non-null   float64
+ 4   major           6194 non-null   str    
+ 5   race            4352 non-null   str    
+ 6   gmat            6194 non-null   float64
+ 7   work_exp        6194 non-null   float64
+ 8   work_industry   6194 non-null   str    
+ 9   admission       1000 non-null   str    
+dtypes: bool(1), float64(3), int64(1), str(5)
+memory usage: 441.7 KB
+None
+
+
+
+
+
+13. Handling Missing Data
+=========================
+
+Activities:
+- Identifying Missing Data
+- Techniques to Handle Missing Data
+
+
+We can open the MBA.csv file and see that we have some missing information
+
+Create new notebook clean_data
+-----------------------------------------------
+import pandas as pd
+
+data = pd.read_csv('MBA.csv')
+
+print(data.head())
+-----------------------------------------------
+Play: shift + enter
+result:
+   application_id  gender  international   gpa       major      race   gmat  \
+0               1  Female          False  3.30    Business     Asian  620.0   
+1               2    Male          False  3.28  Humanities     Black  680.0   
+2               3  Female           True  3.30    Business       NaN  710.0   
+3               4    Male          False  3.47        STEM     Black  690.0   
+4               5    Male          False  3.35        STEM  Hispanic  590.0   
+
+   work_exp          work_industry admission  
+0       3.0     Financial Services     Admit  
+1       5.0  Investment Management       NaN  
+2       5.0             Technology     Admit  
+3       6.0             Technology       NaN  
+4       5.0             Consulting       NaN  
+
+
+
+
+Print missing data info
+-----------------------------------------------
+print(data.isnull().sum())
+-----------------------------------------------
+Play: shift + enter
+result:
+application_id       1
+gender               1
+international        1
+gpa                  1
+major                1
+race              1842
+gmat                 0
+work_exp             0
+work_industry        0
+admission         5194
+dtype: int64
+
+
+
+remove missing rows and colums
+-----------------------------------------------
+data_clean = data.dropna()
+-----------------------------------------------
+Play: shift + enter
+result:
+
+
+Print missing data after the cleanup
+-----------------------------------------------
+print(data_clean.isnull().sum())
+-----------------------------------------------
+Play: shift + enter
+result:
+application_id    0
+gender            0
+international     0
+gpa               0
+major             0
+race              0
+gmat              0
+work_exp          0
+work_industry     0
+admission         0
+dtype: int64
+
+
+
+Another option is to fill missing data with specific value
+
+Example for filling the missing data in 'work_exp' column
+-----------------------------------------------
+data.fillna({'work_exp': data['work_exp'].mean()}, inplace=True)
+-----------------------------------------------
+
+In this example we have no missing data in the 'work_exp' column but this is the way to do it.
+
+
+
+
+
+14. Data Transformation and Feature Engineering
+===============================================
+
+Activities:
+- Feature Scaling
+- Categorical Data Encoding
+    
+
+Modifying data to meet the requirement of Machine Learnign Model - specific format or range
+
+Data normalization or feature scaling ensures that all numerical features are on the same scale witch prevent some features form domitating others due to thir larger magnitudes.  
+
+Normalization is especially important for algorithms like k Nearest neighbors, KNN, SVMs, and gradient descent based methods.
+Example - Neural networks.
+
+So let's start with the min max scaling, which scales the features to a specific range, usually 0 to 1.
+So I'm going to start with a new project just to show you how it's written.
+
+Install scikit learn
+	terminal --> pip install scikit-learn
+
+
+Create new notebook min_max_scaling
+-----------------------------------------------
+import pandas as pd
+from sklearn.preprocessing import MinMaxScaler
+
+data = pd.DataFrame({
+    "Age": [18, 25, 19, 16, 22],
+    "Income": [2000, 3500, 2500, 1800, 3000]
+})
+
+scaler = MinMaxScaler()
+
+data[['Age', 'Income']] = scaler.fit_transform(data[['Age', 'Income']])
+
+print(data)
+-----------------------------------------------
+Play: shift + enter
+result:
+        Age    Income
+0  0.222222  0.117647
+1  1.000000  1.000000
+2  0.333333  0.411765
+3  0.000000  0.000000
+4  0.666667  0.705882
+
+
+
+Our next section is about categorical data encoding, in which in this case we will be using something called as one hot encoding.
+One hot encoding converts the categorical variables into a set of binary columns, zeros or ones, zeros and ones where each category becomes its own column.
+
+This is used when you have categorical features, especially for algorithms that require numerical input. So let us look at one example of how we would do it.
+
+
+-----------------------------------------------
+import pandas as pd
+
+# Sample dataset
+data = pd.DataFrame({
+    "Name": ["Alice", "Bob", "Charlie", "David", "Eve"],
+    "Gender": ["Female", "Male", "Male", "Male", "Female"],
+    "Age": [18, 25, 19, 16, 22],
+    "Purchased": ["Yes", "No", "Yes", "No", "Yes"]
+})
+
+print("Original Data:\n")
+print(data)
+
+# Apply one-hot encoding to Gender and Purchased
+data_encoded = pd.get_dummies(data, columns=['Gender', 'Purchased'])
+
+print("\nOne-Hot Encoded Data:\n")
+print(data_encoded)
+-----------------------------------------------
+Play: shift + enter
+result:
+Original Data:
+
+      Name  Gender  Age Purchased
+0    Alice  Female   18       Yes
+1      Bob    Male   25        No
+2  Charlie    Male   19       Yes
+3    David    Male   16        No
+4      Eve  Female   22       Yes
+
+One-Hot Encoded Data:
+
+      Name  Age  Gender_Female  Gender_Male  Purchased_No  Purchased_Yes
+0    Alice   18           True        False         False           True
+1      Bob   25          False         True          True          False
+2  Charlie   19          False         True         False           True
+3    David   16          False         True          True          False
+4      Eve   22           True        False         False           True
+
+
+
+
+
+
+15. Visualizing Data with Matplotlib and Seaborn
+================================================
+
+Install matplotlib
+	terminal --> pip install matplotlib
+
+Install seaborn
+	terminal --> pip install seaborn
+
+We have to create data.csv file with data
+
+Name	Age	City	Income	Gender
+Alice	18	New York	15000	F
+Bob	25	Los Angeles	30000	M
+Charlie	19	Chicago	18000	F
+David	16	Houston	8000	M
+Eve	22	Phoenix	8000	F
+
+
+Activities:
+- Introduction to Data Visualization
+- Matplotlib Basics
+- Bar Chart
+- Seaborn for Advanced Visualizations
+
+
+
+Line plot with Matplotlib
+-------------------------
+
+Create new notebook called visual
+-----------------------------------------------
+import matplotlib.pyplot as plt
+import pandas as pd
+
+# Read CSV with correct separator
+data = pd.read_csv('data.csv', sep=';')
+
+# Remove any extra spaces in column names
+data.columns = data.columns.str.strip()
+
+# Check columns
+print(data.columns)
+
+# Plot Age vs Income
+plt.plot(data['Age'], data['Income'])
+plt.title('Age vs. Income')
+plt.xlabel('Age')
+plt.ylabel('Income')
+plt.show()
+-----------------------------------------------
+Play: shift + enter
+result: 
+Index(['Name', 'Age', 'City', 'Income', 'Gender'], dtype='str')
+Chart figure
+
+
+
+
+
+Bar chart which visualizes categorical data using bar charts.
+-------------------------------------------------------------
+
+-----------------------------------------------
+data['Gender'].value_counts().plot(kind='bar')
+plt.title('Gender Distribution')
+plt.show()
+-----------------------------------------------
+Play: shift + enter
+result: Bar chart
+
+
+
+
+Seaborn for Advanced Visualizations
+-----------------------------------
+
+Seaborn provides more aesthetic and advanced visualization options. It can give you a correlation heat map.
+
+Heat map with seaborn
+-----------------------------------------------
+import seaborn as sns
+
+sns.heatmap(data.corr(), annot=True, cmap='coolwarm')
+plt.title('Corelation Matrix')
+plt.show()
+-----------------------------------------------
+Play: shift + enter
+result: Heat map will not be visualized because we have no such data
+
+
+Simple example
+-----------------------------------------------
+import seaborn as sns
+
+sns.pairplot(data[['Age', 'Income', 'Gender']])
+plt.show()
+-----------------------------------------------
+Play: shift + enter
+result: We will se 2 bar and 2 distribution charts
+
+
+
+
+
+
+16. Descriptive Statistics
+==========================
+
+Activities:
+- Basic Descriptive Statistics
+- Interpreting Statistics
+
+Now as per basic descriptive statistics goes you can compute basic descriptive statistics like mean median mode standard deviation to understand the distribution of data.
+
+-----------------------------------------------
+print(data.describe())
+-----------------------------------------------
+Play: shift + enter
+
+So this will give you data about your data which is mean median mode, standard deviation. Where is the fluctuation. Visit in the minimum side maximum side.
+
+Now as per interpreting statistics go if you want. If you get mean median and mode that helps you kind of a central tendency of the data.
+
+If you go with standard deviation that is a measure of spread of how the data is spread across. 
+
+And then finally the percentage percentiles which are minimum to maximum to zero, 25%, 50%, 75%,
+
+
+
+
+17. Hands-on Project: Exploratory Data Analysis on a Real Dataset
+=================================================================
+
+Our task here to perform exploratory data analysis on the Titanic data set to understand the survival rate across various features like age, gender and class.
+
+Steps
+1. Load the Titanic dataset using Pandas.
+2. Clean the data by handling missing values (e.g., missing age values).
+3. Explore the dataset.
+4. Visualize the data
+
+Download the dataset - https://www.kaggle.com/datasets/rahulsah06/titanic
+Rename the train.csv to titanic_1.csv
+Rename the test.csv to titanic_2.csv
+Rename the gender_submission.csv to titanic_3.csv
+
+
+Create new notebook Titanic_hands_on
+-----------------------------------------------
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Load all three parts
+df1 = pd.read_csv('titanic_1.csv')
+df2 = pd.read_csv('titanic_2.csv')
+df3 = pd.read_csv('titanic_3.csv')
+
+# Combine them into one dataset
+data = pd.concat([df1, df2, df3], ignore_index=True)
+
+# Fill missing data
+data.fillna({'Age': data['Age'].mean()}, inplace=True)
+
+# Analyze suvival rate
+print(data['Survived'].value_counts(normalize=True))
+
+# Analyze Survival by sex
+print(data.groupby(['Sex', 'Pclass'])['Survived'].mean())
+
+# Visualize the data
+sns.barplot(x='Sex', y='Survived', data=data)
+plt.title('Survival Rate by Gender')
+plt.show()
+-----------------------------------------------
+Play: shift + enter
+Result:
+Survived
+0.0    0.622613
+1.0    0.377387
+Name: proportion, dtype: float64
+Sex     Pclass
+female  1.0       0.968085
+        2.0       0.921053
+        3.0       0.500000
+male    1.0       0.368852
+        2.0       0.157407
+        3.0       0.135447
+Name: Survived, dtype: float64
+
+Bar Chart
+
+
+
+
+
+Assignment 2: Day 2: Coding Exercise
+====================================
+Try to complete these assignments using Jupyter Notebook or your favorite editor in Python.
+Questions for this assignment
+
+Load any other dataset (like the Iris dataset - https://www.kaggle.com/datasets/himanshunakrani/iris-dataset) and perform basic EDA, including handling missing values and visualizing relationships between features.
+
+Create a pie chart to visualize the proportion of passengers who survived vs. those who didn’t in the Titanic dataset.
+
+Find the median income from the dataset and create a histogram of income distribution.
+
+
+Create new notebook Irish_day_2_assigment_task_1
+-----------------------------------------------
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Load dataset
+data = pd.read_csv('iris.csv')
+
+# Display basic info
+print("First 5 rows:")
+print(data.head())
+
+print("\nDataset Info:")
+print(data.info())
+
+print("\nStatistical Summary:")
+print(data.describe())
+
+# Check missing values
+print("\nMissing Values:")
+print(data.isnull().sum())
+
+# Fill missing numeric values with mean (if any)
+numeric_columns = ['sepal_length', 'sepal_width', 'petal_length', 'petal_width']
+
+data[numeric_columns] = data[numeric_columns].fillna(
+    data[numeric_columns].mean()
+)
+
+print("\nSpecies Distribution:")
+print(data['species'].value_counts())
+
+plt.figure()
+sns.heatmap(data[numeric_columns].corr(), annot=True)
+plt.title("Correlation Matrix")
+plt.show()
+
+plt.figure()
+sns.scatterplot(x='sepal_length', y='petal_length', hue='species', data=data)
+plt.title("Sepal Length vs Petal Length")
+plt.show()
+
+sns.pairplot(data, hue='species')
+plt.show()
+-----------------------------------------------
+Play: shift + enter
+Result:
+
+
+
+
+
+Task 2
+------
+Create a pie chart to visualize the proportion of passengers who survived vs. those who didn’t in the Titanic dataset.
+
+Create new notebook titanic_pie_chart
+-----------------------------------------------
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Load all three parts
+df1 = pd.read_csv('titanic_1.csv')
+df2 = pd.read_csv('titanic_2.csv')
+df3 = pd.read_csv('titanic_3.csv')
+
+# Combine into one dataset
+data = pd.concat([df1, df2, df3], ignore_index=True)
+
+# Count survival values
+survival_counts = data['Survived'].value_counts()
+
+# Create labels
+labels = ['Did Not Survive', 'Survived']
+
+# Create pie chart
+plt.figure()
+plt.pie(
+    survival_counts,
+    labels=labels,
+    autopct='%1.1f%%',
+    startangle=90
+)
+
+plt.title('Proportion of Passengers Who Survived vs Did Not Survive')
+plt.show()
+-----------------------------------------------
+Play: shift + enter
+Result:
+
+
+
+Task 3 
+------
+Find the median income from the dataset and create a histogram of income distribution.
+
+Create new notebook task_3_assigment_income
+-----------------------------------------------
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Load dataset (tab-separated file)
+data = pd.read_csv('data.csv', sep=';')
+
+# Display first rows
+print("First 5 rows:")
+print(data.head())
+
+# Calculate median income
+median_income = data['Income'].median()
+print("\nMedian Income:", median_income)
+
+# Create histogram
+plt.figure()
+plt.hist(data['Income'], bins=5)
+plt.title('Income Distribution')
+plt.xlabel('Income')
+plt.ylabel('Frequency')
+plt.show()
+-----------------------------------------------
+Play: shift + enter
+Result:
