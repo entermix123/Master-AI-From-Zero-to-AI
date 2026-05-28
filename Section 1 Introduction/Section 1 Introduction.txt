@@ -1,0 +1,41 @@
+Section 1 Introduction
+======================
+
+
+Content
+-------
+1. Certification of Completion
+2. Introduction to Course
+3. Resources for Course
+
+
+
+2. Introduction to Course
+=========================
+
+Model Tuning and Optimization
+-----------------------------
+- Day 1: Python for AI Basics
+- Day 2: Exploratory Data Analysis (EDA)
+- Day 3: Introduction to Machine Learning (ML)
+- Day 4: Classification Models in Machine Learning
+- Day 5: Introduction to Neural Networks and Deep Learning
+- Day 6: Building a Sentiment Analysis Model Using Natural Language Processing (NLP)
+- Day 7: Deploying an AI Model as a Web Service
+
+
+3. Resources for Course
+=======================
+
+
+
+
+
+
+
+
+
+
+
+
+
