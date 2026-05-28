@@ -1,0 +1,486 @@
+Section 2 Day 1 - Python for AI Basics
+======================================
+
+
+Content
+-------
+4. Introduction to Day 1: Python for AI Basics
+5. Introduction to Python Programming
+6. Python Basics
+7. Working with Lists and Dictionaries
+8. Introduction to NumPy
+9. Introduction to Pandas
+10. Hands-on Project: Basic Data Manipulation and File Handling
+Assignment 1: Day 1: Coding Exercise
+
+
+
+
+4. Introduction to Day 1: Python for AI Basics
+==============================================
+
+
+
+
+5. Introduction to Python Programming
+=====================================
+
+Download and install Python - https://www.python.org/downloads/
+Download and install jupyter - https://jupyter.org/install
+
+Install JupyterLab with pip
+	terminal --> pip install jupyterlab
+
+Install Jupyter Notebook with pip
+	terminal --> pip install notebook
+
+Start Jupyter Notebok
+	terminal --> jupyter notebook
+
+Create new folder called code and in it create new notebook.
+
+set
+print("Hello World")
+
+press play button and the result will be visible - Hello World
+
+
+
+
+6. Python Basics
+================
+
+Create new Python Basics notebook
+
+Set '# Python Basics' on the first line. Set the line as markdown with selecting the line and press 'm'. The line must be with '#' for comment and do not participate in the notebook operations. Now the notebook has a header.
+
+-----------------------------------------------
+# Variables Types
+
+x = 5 
+y = 2.5
+name = "Vivian"
+is_student = True
+
+# Operators +, -, *, /, **, % 
+sum = x * y
+product = x + y
+power = x ** 2
+
+print(power)
+-----------------------------------------------
+Play: shift + enter
+result: 25
+
+
+-----------------------------------------------
+# Control Flow
+
+if x > y:
+    print (f"{x} is greater than {y}")
+else:
+    print((f"{y} is greater than {x}"))
+-----------------------------------------------
+Play: shift + enter
+result: 5 is greater than 2.5
+
+
+-----------------------------------------------
+# Loops
+for i in range(5):
+    print(f"i = {i}")
+j = 1
+while j < 8:
+    print(f"j = {j}")
+    j += 1
+    
+print("I am out")
+-----------------------------------------------
+Play: shift + enter
+result:
+i = 0
+i = 1
+i = 2
+i = 3
+i = 4
+j = 1
+j = 2
+j = 3
+j = 4
+j = 5
+j = 6
+j = 7
+I am out
+
+
+-----------------------------------------------
+# functions
+
+def greet(name):
+    return f"Hello, {name}"
+
+print(greet("Scott"))
+-----------------------------------------------
+Play: shift + enter
+result: Hello, Scott
+
+
+
+
+
+
+7. Working with Lists and Dictionaries
+======================================
+
+
+-----------------------------------------------
+# Lists
+
+nuumbers = [1, 2, 3, 4 ,5]
+print(nuumbers[3])
+
+nuumbers.append(6)
+print(nuumbers)
+-----------------------------------------------
+Play: shift + enter
+result: 
+4
+[1, 2, 3, 4, 5, 6]
+
+
+
+-----------------------------------------------
+# Dictionaries
+
+student = {"name": "Scott", "age": 40, "is_student": True}
+print(student["age"])
+print(student["name"])
+print(student["is_student"])
+-----------------------------------------------
+Play: shift + enter
+result: 
+40
+Scott
+True
+
+
+
+
+
+8. Introduction to NumPy
+========================
+
+Install numpy
+	terminal --> pip install numpy
+
+-----------------------------------------------
+# Creating Array
+
+import numpy as np
+
+array = np.array([1,2,3,4,5])
+print(array)
+-----------------------------------------------
+Play: shift + enter
+result: [1 2 3 4 5]
+
+
+-----------------------------------------------
+array_2 = np.array([5,4,3,2,1])
+print(array + array_2)
+-----------------------------------------------
+Play: shift + enter
+result: [6 6 6 6 6]					# added the first array to the second array
+
+
+
+
+-----------------------------------------------
+matrix = np.array([[1,2],
+        		   [3,4]])
+# print matrix
+print(matrix)
+
+# matrices multplication
+print(np.dot(matrix, matrix))
+
+matrix_2 = np.array([[4,3],
+                     [2,1]])
+
+# matrices multplication
+print(np.dot(matrix, matrix_2))
+-----------------------------------------------
+Play: shift + enter
+result: 
+[[1 2]
+ [3 4]]
+
+[[ 7 10]
+ [15 22]]
+
+[[ 8  5]
+ [20 13]]
+
+
+
+
+
+
+
+9. Introduction to Pandas
+=========================
+
+Install pandas
+	terminal --> pip install pandas
+
+Create a data.csv file with data:
+
+Name	Age	City
+Alice	18	New York
+Bob	25	Los Angeles
+Charlie	19	Chicago
+David	16	Houston
+Eve	22	Phoenix
+
+
+-----------------------------------------------
+# pandas
+
+import pandas as pd
+
+data = pd.read_csv('data.csv', sep=';')
+
+print(data.head())
+-----------------------------------------------
+Play: shift + enter
+result: 
+      Name  Age         City
+0    Alice   18     New York
+1      Bob   25  Los Angeles
+2  Charlie   19      Chicago
+3    David   16      Houston
+4      Eve   22      Phoenix
+
+
+
+
+
+-----------------------------------------------
+# data manipulation
+
+name = data['Name']
+
+print(name)
+-----------------------------------------------
+Play: shift + enter
+result: 
+0      Alice
+1        Bob
+2    Charlie
+3      David
+4        Eve
+Name: Name, dtype: str
+
+
+-----------------------------------------------
+# data filtering
+
+filtered_data = data[data['Age'] > 18]
+
+print(filtered_data)
+-----------------------------------------------
+Play: shift + enter
+result: 
+      Name  Age         City
+1      Bob   25  Los Angeles
+2  Charlie   19      Chicago
+4      Eve   22      Phoenix
+
+
+
+-----------------------------------------------
+# data status
+
+print(data.describe())
+-----------------------------------------------
+Play: shift + enter
+result: 
+             Age
+count   5.000000
+mean   20.000000
+std     3.535534
+min    16.000000
+25%    18.000000
+50%    19.000000
+75%    22.000000
+max    25.000000
+
+
+
+
+
+
+
+10. Hands-on Project: Basic Data Manipulation and File Handling
+===============================================================
+
+Task: Build a small program that reads from a text file, processes the content, and writes the results to another file.
+Steps:
+
+    Read a text file with multiple lines of numbers (e.g., numbers.txt).
+    Process the data by converting each number to its square.
+    Write the output to another file (e.g., output.txt).
+
+
+Create a text file called numbers.txt with content
+1
+2
+3
+4
+5
+10
+15
+
+
+
+
+Create notebook called Hands_on_1.jpynb
+
+-----------------------------------------------
+# Exercise 1: Create a List of Numbers and Print Their Squares
+# Create a list of 10 numbers and write a Python program to print the square of each number.
+
+list = [1,2,3,4,5,6,7,8,9,10]
+numbers = [str(num ** 2) for num in list]
+print(numbers)
+-----------------------------------------------
+Play: shift + enter
+result: ['1', '4', '9', '16', '25', '36', '49', '64', '81', '100']
+
+
+
+
+
+Assignment 1: Day 1: Coding Exercise
+====================================
+
+Questions for this assignment
+
+Exercise 1: Create a List of Numbers and Print Their Squares
+
+Create a list of 10 numbers and write a Python program to print the square of each number.
+
+-----------------------------------------------
+# Exercise 1: Create a List of Numbers and Print Their Squares
+# Create a list of 10 numbers and write a Python program to print the square of each number.
+
+list = [1,2,3,4,5,6,7,8,9,10]
+numbers = [str(num ** 2) for num in list]
+print(numbers)
+-----------------------------------------------
+Play: shift + enter
+result: ['1', '4', '9', '16', '25', '36', '49', '64', '81', '100']
+
+
+
+
+In this exercise, you'll create a list of 10 numbers and write a Python program that prints the square of each number. This task helps you practice:
+
+- Creating lists in Python.
+
+- Using for loops to iterate over elements.
+
+- Performing basic mathematical operations such as exponentiation (**).
+
+
+
+Exercise 2: Reading and Writing Files in Python
+
+Modify the above code to read a CSV file, select specific columns, and write the output to a new CSV file.
+
+
+In this exercise, you’ll practice file handling by reading from a text file that contains numbers (one per line), squaring each number, and writing the results to a new file. This task helps you get comfortable with:
+
+- Reading from a file using Python’s open() function.
+
+- Iterating over file contents, performing operations on the data.
+
+- Writing the processed data to a new file.
+
+-----------------------------------------------
+# Exercise 2: Reading and Writing Files in Python
+# Modify the above code to read a CSV file, select specific columns, and write the output to a new CSV file.
+
+import pandas as pd
+
+data = pd.read_csv("data.csv", sep=";")
+
+filtered = data[data["Age"] > 18][["Name", "Age"]]
+
+filtered.to_csv("output_assignment.csv", index=False)
+
+print("File written successfully.")
+-----------------------------------------------
+Play: shift + enter
+result: Check output file output_assignment.csv
+
+
+
+
+Exercise 3: Working with Lists and Dictionaries
+
+Modify the above code to read a CSV file, select specific columns, and write the output to a new CSV file.
+
+
+This exercise focuses on practicing basic Python data structures. You will:
+
+- Create a list of 5 students’ names and their ages.
+
+- Use a dictionary to store and access the students’ ages.
+
+- Write a program to iterate through the dictionary and print each student's name along with their age. This helps you become familiar with how Python handles data collections.
+
+
+-----------------------------------------------
+# Exercise 3: Working with Lists and Dictionaries
+# Modify the above code to read a CSV file, select specific columns, and write the output to a new CSV file.
+
+# Step 1: Create a list of students
+students = ["Alice", "Bob", "Charlie", "David", "Eve"]
+
+# Step 2: Create a dictionary with their ages
+ages = {
+    "Alice": 18,
+    "Bob": 25,
+    "Charlie": 19,
+    "David": 16,
+    "Eve": 22
+}
+
+# Step 3: Iterate through the dictionary and print each student's name and age
+for student in students:
+    print(f"{student} is {ages[student]} years old")
+
+# Optional Step 4: Write to a CSV file
+import csv
+
+with open("students_output.csv", "w", newline="") as file:
+    writer = csv.writer(file)
+    writer.writerow(["Name", "Age"])  # headers
+    for student in students:
+        writer.writerow([student, ages[student]])
+-----------------------------------------------
+Play: shift + enter
+result: 
+Alice is 18 years old
+Bob is 25 years old
+Charlie is 19 years old
+David is 16 years old
+Eve is 22 years old
+
+
+
+
+
+
+
